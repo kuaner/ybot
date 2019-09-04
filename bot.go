@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/url"
@@ -10,6 +11,7 @@ import (
 	"github.com/iawia002/annie/downloader"
 
 	"github.com/iawia002/annie/extractors/youtube"
+	"github.com/iawia002/annie/request"
 	"github.com/iawia002/annie/utils"
 )
 
@@ -74,6 +76,7 @@ func process(taskC <-chan task, bot *tgbotapi.BotAPI) {
 			continue
 		}
 		log.Printf("Convert m4a for %s finished", t.yURL)
+		author := author(t.yURL)
 		l := fileList(output)
 		// telegram的播放列表，是后收到的会在上，所以这里要倒序发msg
 		for idx := len(l) - 1; idx >= 0; idx-- {
@@ -84,7 +87,7 @@ func process(taskC <-chan task, bot *tgbotapi.BotAPI) {
 			} else {
 				audioMsg.Title = fmt.Sprintf("(%d/%d) - %s", idx+1, len(l), t.title)
 			}
-			audioMsg.Performer = "Youtube Red"
+			audioMsg.Performer = author
 			audioMsg.Duration = duration(f)
 			log.Printf("Send %s %s", f, audioMsg.Title)
 			bot.Send(audioMsg)
@@ -141,4 +144,25 @@ func extract(videoURL string) (t task) {
 		}
 	}
 	return
+}
+
+// 为了不修改annie的代码，只能在这里多获取一次
+// 获取youtube的作者
+func author(videoURL string) string {
+	html, err := request.Get(videoURL, "https://www.youtube.com", nil)
+	if err != nil {
+		return "Youtube Red"
+	}
+	ytplayer := utils.MatchOneOf(html, `;ytplayer\.config\s*=\s*({.+?});`)[1]
+	var youtube = struct {
+		Args struct {
+			PlayerResponse string `json:"player_response"`
+		} `json:"args"`
+	}{}
+	json.Unmarshal([]byte(ytplayer), &youtube)
+	author := utils.GetStringFromJson(youtube.Args.PlayerResponse, "videoDetails.author")
+	if author == "" {
+		return "Youtube Red"
+	}
+	return author
 }

@@ -40,7 +40,7 @@ func startBot(updates tgbotapi.UpdatesChannel, bot *tgbotapi.BotAPI) {
 			continue
 		}
 		log.Printf("Receive msg from %s %d %s", update.Message.From.UserName, update.Message.Chat.ID, update.Message.Text)
-		txt := fmt.Sprintf(`🔈️🔈️🔈️🔈️<p><a href="%s">%s</a></p>🔈️🔈️🔈️🔈️`, t.url, t.title)
+		txt := fmt.Sprintf(`🔈️🔈️🔈️🔈️<a href="%s">%s</a>🔈️🔈️🔈️🔈️`, t.url, t.title)
 		msg := tgbotapi.NewMessage(update.Message.Chat.ID, txt)
 		msg.ParseMode = tgbotapi.ModeHTML
 		msg.ReplyToMessageID = update.Message.MessageID

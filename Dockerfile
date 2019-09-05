@@ -2,6 +2,8 @@ FROM alpine:3
 
 LABEL maintainer=kuaner@gmail.com
 
+ENV GLIBC_VERSION=2.30-r0
+
 RUN apk add --update curl tzdata upx ca-certificates &&\
     curl -Lo /etc/apk/keys/sgerrand.rsa.pub https://raw.githubusercontent.com/sgerrand/alpine-pkg-glibc/master/sgerrand.rsa.pub &&\
     curl -Lo glibc.apk "https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk" &&\

@@ -8,8 +8,8 @@ import (
 	"path/filepath"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
-	"github.com/iawia002/annie/downloader"
 
+	"github.com/iawia002/annie/downloader"
 	"github.com/iawia002/annie/extractors/youtube"
 	"github.com/iawia002/annie/request"
 	"github.com/iawia002/annie/utils"
@@ -20,6 +20,7 @@ type task struct {
 	url    string
 	size   int64
 	chatID int64
+	msgID  int
 	yURL   string
 }
 
@@ -39,17 +40,26 @@ func startBot(updates tgbotapi.UpdatesChannel, bot *tgbotapi.BotAPI) {
 			continue
 		}
 		log.Printf("Receive msg from %s %d %s", update.Message.From.UserName, update.Message.Chat.ID, update.Message.Text)
-		txt := fmt.Sprintf(`🔈️🔈️ <a href="%s">%s</a> 🔈️🔈️`, t.url, t.title)
+		txt := fmt.Sprintf(`🔈️🔈️🔈️🔈️<p><a href="%s">%s</a></p>🔈️🔈️🔈️🔈️`, t.url, t.title)
 		msg := tgbotapi.NewMessage(update.Message.Chat.ID, txt)
 		msg.ParseMode = tgbotapi.ModeHTML
 		msg.ReplyToMessageID = update.Message.MessageID
-		bot.Send(msg)
+		resp, err := bot.Send(msg)
+		if err != nil {
+			//TODO: backoff retry?
+			continue
+		}
 		t.chatID = update.Message.Chat.ID
+		t.msgID = resp.MessageID
 		select {
 		case taskC <- t:
 			// do nothing
 		default:
 			// send failed msg
+			txt := msg.Text + "队列拥堵，将不会发送离线音频文件!"
+			editMsg := tgbotapi.NewEditMessageText(t.chatID, t.msgID, txt)
+			editMsg.ParseMode = tgbotapi.ModeHTML
+			bot.Send(editMsg)
 		}
 	}
 }

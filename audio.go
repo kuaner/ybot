@@ -13,7 +13,6 @@ import (
 const splitDuration = "6000" // 100 * 60 second
 
 func cvt(input, output string) error {
-
 	ctx, cfn := context.WithTimeout(context.Background(), time.Minute*30)
 	defer cfn()
 	// 这里不知道为什么用acc编码telegram会有限制，不足50M也报错
@@ -41,7 +40,7 @@ func cvt(input, output string) error {
 
 func duration(input string) int {
 	// ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1
-	ctx, cfn := context.WithTimeout(context.Background(), time.Minute*10)
+	ctx, cfn := context.WithTimeout(context.Background(), time.Second*5)
 	defer cfn()
 	args := []string{
 		"-v",

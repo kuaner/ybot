@@ -28,26 +28,31 @@ Yet another telegram youtbe bot
 
 可以使用 GCP 每月的免费额度来部署
 
-ybot-token 在 telgram 上生成的机器人 Token
+- ybot-token 在 telgram 上生成的机器人 Token
 
-ybot-thread 支持并行处理的任务数，依资源情况来定
+- ybot-thread 支持并行处理的任务数，依资源情况来定
 
-ybot-hook 机器人的运行模式 webhook 或者 轮训
+- ybot-hook 机器人的运行模式 Webhook 或者 轮询
 
-在 webhook 模式下，如果 80，443 空余支持自动获取证书配置
+  - 在 Webhook 模式下，如果 80，443 空余支持自动获取证书配置
 
-    ybot-acme true
+    - ybot-acme true
 
-    ybot-mail 邮箱
+    - ybot-mail 邮箱
 
-    ybot-domain 预先解析域名
+    - ybot-domain 预先解析域名
 
-如果需要反向代理配置
+  - 如果需要反向代理配置
 
-    ybot-acme false
-    ybot-domain 预先解析域名,bot.example.com
-    ybot-port 默认8008，
-    使用hostname或者PATH /ybot 来转发请求
+    - ybot-acme false
+
+    - ybot-domain 预先解析域名,bot.example.com
+
+    - ybot-port 默认 8008，
+
+    - 使用 hostname 或者 PATH /ybot 来转发请求
+
+- 在轮询模式下，只需要配置 Token
 
 所有参数都支持环境变量，方便在 k8s 环境下一键部署
 
@@ -62,3 +67,7 @@ docker run -d -p 80 -p 443 --restart=always --name ybot \
     -e YBOT_MAIL=bot@example.com \
     kuaner/ybot
 ```
+
+### 感谢
+
+1. https://github.com/iawia002/annie 特别好用的 golang youtube 解析库

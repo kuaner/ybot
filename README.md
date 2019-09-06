@@ -20,7 +20,7 @@ Yet another telegram youtbe bot
 - [x] ACME Support
 - [ ] 支持无依赖 FFMPEG 运行
 - [ ] 音频封面
-- [ ] 同时处理通一个 Youtube 请求
+- [ ] 同时处理同一个 Youtube 请求
 
 ### 部署
 

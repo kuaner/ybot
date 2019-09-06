@@ -12,7 +12,7 @@ func init() {
 	flag.IntVar(&config.prot, "ybot-port", 8008, "The port number of server")
 	flag.BoolVar(&config.acme, "ybot-acme", true, "Enable autocert")
 	flag.StringVar(&config.mail, "ybot-mail", "", "Specify acme mail address")
-	flag.BoolVar(&config.hook, "ybot-hook", true, "Enable Webhook mode")
+	flag.BoolVar(&config.hook, "ybot-hook", false, "Enable Webhook mode")
 }
 
 func main() {

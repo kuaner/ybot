@@ -56,9 +56,7 @@ Yet another telegram youtbe bot
 
 所有参数都支持环境变量，方便在 k8s 环境下一键部署
 
-同时提供 Docker Image
-
-kuaner/ybot https://hub.docker.com/r/kuaner/ybot
+同时提供 Docker Image [kuaner/ybot](https://hub.docker.com/r/kuaner/ybot)
 
 ```Shell
 docker run -d -p 80 -p 443 --restart=always --name ybot \

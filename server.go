@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	"golang.org/x/crypto/acme/autocert"
@@ -61,6 +62,14 @@ func start() {
 			return
 		}
 		log.Println("Start ybot in pull mode")
+		//add google cloud run support
+		if port := os.Getenv("PORT"); port != "" {
+			// run a fake http server
+			http.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) {
+				w.Write([]byte("hello ybot"))
+			})
+			go http.ListenAndServe(fmt.Sprintf(":%s", port), nil)
+		}
 		startBot(updates, bot)
 	}
 

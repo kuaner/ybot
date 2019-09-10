@@ -2,6 +2,8 @@
 
 Yet another telegram youtbe bot
 
+[在 Telegram 上使用](https://t.me/autops_bot)
+
 简单来说，就是一个把 Youtube 视频提取音频并发送到 Telegram 的小功能。只需要一步，就可以在 Telegram 播放，很适合开车听 Youtube。
 
 [![Run on Google Cloud](https://storage.googleapis.com/cloudrun/button.svg)](https://console.cloud.google.com/cloudshell/editor?shellonly=true&cloudshell_image=gcr.io/cloudrun/button&cloudshell_git_repo=https://github.com/kuaner/ybot.git)

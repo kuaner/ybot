@@ -8,6 +8,10 @@ Yet another telegram youtbe bot
 
 [![Run on Google Cloud](https://storage.googleapis.com/cloudrun/button.svg)](https://console.cloud.google.com/cloudshell/editor?shellonly=true&cloudshell_image=gcr.io/cloudrun/button&cloudshell_git_repo=https://github.com/kuaner/ybot.git)
 
+![feature](./picture/gcp.jpg)
+
+按照提示，填入 Token 后，会自动部署好，最后访问下 GCP 提供的 URL 地址，来触发部署的热部署。使用 GCP 部署后，每次要使用前，需要先通过 URL 触发下。
+
 ### 缘由
 
 经常会在 Youtebe 上看一些语言类节目，在安卓阵营的时候，使用 Ymusic 也能基本满足需求。换到 iOS 后，问题就比较严峻了，不能后台播放，播放不停刷广告，尤其是不能 Carplay，最终促成了这个小机器人。
@@ -16,7 +20,7 @@ Yet another telegram youtbe bot
 
 功能实现上没什么复杂点，在使用上进行了点优化。利用了 Telegram 便利的 API，使用上，只需要把想听的节目在 youtube 上分享给这个机器人就行。
 
-![avatar](./picture/1.png)
+![example](./picture/1.png)
 
 ### 特性
 

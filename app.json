@@ -5,11 +5,6 @@
       "description": "Token of telegram bot",
       "value": "",
       "required": true
-    },
-    "YBOT_HOOK": {
-      "description": "使用轮询模式,设置false，保持不变",
-      "value": "false",
-      "required": false
     }
   }
 }

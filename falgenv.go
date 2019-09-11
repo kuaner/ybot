@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-// Specify a prefix for environment variables.
+// Prefix Specify a prefix for environment variables.
 var Prefix = ""
 
 func contains(list []*flag.Flag, f *flag.Flag) bool {

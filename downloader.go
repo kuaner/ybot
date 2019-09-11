@@ -14,9 +14,9 @@ import (
 
 var client = http.Client{Timeout: time.Second * 180}
 var (
-	httpError     = errors.New("Http error")
-	writeError    = errors.New("Write error")
-	downloadError = errors.New("Download error")
+	errHTTP     = errors.New("Http error")
+	errWrite    = errors.New("Write error")
+	errDownload = errors.New("Download error")
 )
 
 //每个线程下载文件的大小 4M
@@ -40,10 +40,8 @@ func download(url, cachePath string, size int64) error {
 	}
 	if localFileSize == size {
 		return nil
-	} else {
-		return dispSliceDownload(file, size, url)
 	}
-
+	return dispSliceDownload(file, size, url)
 }
 
 func dispSliceDownload(file *os.File, ContentLength int64, url string) error {
@@ -54,7 +52,7 @@ func dispSliceDownload(file *os.File, ContentLength int64, url string) error {
 	i := ContentLength / packageSize
 	//保证文件下载完整
 	if ContentLength%packageSize > 0 {
-		i += 1
+		i++
 	}
 	//分配下载线程
 	for count := 0; count < int(i); count++ {
@@ -76,7 +74,7 @@ func dispSliceDownload(file *os.File, ContentLength int64, url string) error {
 				return sliceDownload(req, file, start)
 			})
 		} else {
-			return httpError
+			return errHTTP
 		}
 	}
 	//等待所有线程完成下载
@@ -90,13 +88,11 @@ func sliceDownload(request *http.Request, file *os.File, start int64) error {
 			//从我们计算好的起点写入文件
 			_, err := file.WriteAt(bytes, start)
 			if err != nil {
-				return writeError
+				return errWrite
 			}
 			return nil
-		} else {
-			return downloadError
 		}
-	} else {
-		return downloadError
+		return errDownload
 	}
+	return errDownload
 }

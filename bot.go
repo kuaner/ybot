@@ -116,6 +116,11 @@ func fileList(leading string) []string {
 }
 
 func extract(videoURL string) (t task) {
+	defer func() {
+		if r := recover(); r != nil {
+			log.Println("Recovered from extract", r)
+		}
+	}()
 	var (
 		domain string
 		err    error

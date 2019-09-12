@@ -7,7 +7,7 @@ import (
 	"net/url"
 	"path/filepath"
 
-	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
+	tgbotapi "github.com/kuaner/telegram-bot-api"
 
 	"github.com/iawia002/annie/downloader"
 	"github.com/iawia002/annie/extractors/youtube"

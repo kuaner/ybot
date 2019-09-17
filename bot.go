@@ -192,6 +192,7 @@ func metadata(videoURL string) (string, string) {
 	if videoid == "" {
 		return "Youtube Red", ""
 	}
-	thumb := fmt.Sprintf("https://i.ytimg.com/vi/%s/default.jpg", videoid)
+	// telegram 会自动裁剪，这里传高清封面
+	thumb := fmt.Sprintf("https://i.ytimg.com/vi/%s/hqdefault.jpg", videoid)
 	return author, thumb
 }

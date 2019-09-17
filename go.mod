@@ -6,9 +6,9 @@ require (
 	github.com/MercuryEngineering/CookieMonster v0.0.0-20180304172713-1584578b3403 // indirect
 	github.com/cheggaaa/pb v1.0.28 // indirect
 	github.com/fatih/color v1.7.0 // indirect
+	github.com/go-telegram-bot-api/telegram-bot-api v4.6.4+incompatible
 	github.com/iawia002/annie v0.0.0-20190813141157-cb16909d490e
 	github.com/kr/pretty v0.1.0 // indirect
-	github.com/kuaner/telegram-bot-api v4.6.4+incompatible
 	github.com/mattn/go-colorable v0.1.2 // indirect
 	github.com/mattn/go-isatty v0.0.9 // indirect
 	github.com/mattn/go-runewidth v0.0.4 // indirect

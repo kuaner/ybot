@@ -26,8 +26,8 @@ Yet another telegram youtbe bot
 
 - [x] 音频分段发送
 - [x] ACME Support
+- [x] 音频封面
 - [ ] 支持无依赖 FFMPEG 运行
-- [ ] 音频封面
 - [ ] 同时处理同一个 Youtube 请求
 
 ### 参数

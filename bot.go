@@ -7,7 +7,7 @@ import (
 	"net/url"
 	"path/filepath"
 
-	tgbotapi "github.com/kuaner/telegram-bot-api"
+	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 
 	"github.com/iawia002/annie/downloader"
 	"github.com/iawia002/annie/extractors/youtube"
@@ -86,23 +86,32 @@ func process(taskC <-chan task, bot *tgbotapi.BotAPI) {
 			continue
 		}
 		log.Printf("Convert m4a for %s finished", t.yURL)
-		author := author(t.yURL)
+		author, thumb := metadata(t.yURL)
+		if downloadThumb(thumb, output+".jpg") == nil {
+			thumb = output + ".jpg"
+		} else {
+			thumb = ""
+		}
 		l := fileList(output)
 		// telegram的播放列表，是后收到的会在上，所以这里要倒序发msg
 		for idx := len(l) - 1; idx >= 0; idx-- {
 			f := l[idx]
-			audioMsg := tgbotapi.NewAudioUpload(t.chatID, f)
-			if len(l) == 1 {
-				audioMsg.Title = t.title
-			} else {
-				audioMsg.Title = fmt.Sprintf("(%d/%d) - %s", idx+1, len(l), t.title)
+			msg := audioMsg{
+				audio:  f,
+				chatID: t.chatID,
 			}
-			audioMsg.Performer = author
-			audioMsg.Duration = duration(f)
-			log.Printf("Send %s %s", f, audioMsg.Title)
-			bot.Send(audioMsg)
+			if len(l) == 1 {
+				msg.title = t.title
+			} else {
+				msg.title = fmt.Sprintf("(%d/%d) - %s", idx+1, len(l), t.title)
+			}
+			msg.performer = author
+			msg.thumb = thumb
+			msg.duration = duration(f)
+			log.Printf("Send %s %s", f, msg.title)
+			sendAudio(bot, msg)
 		}
-		clean(m4a)
+		clean(m4a, thumb)
 		clean(l...)
 	}
 }
@@ -163,10 +172,10 @@ func extract(videoURL string) (t task) {
 
 // 为了不修改annie的代码，只能在这里多获取一次
 // 获取youtube的作者
-func author(videoURL string) string {
+func metadata(videoURL string) (string, string) {
 	html, err := request.Get(videoURL, "https://www.youtube.com", nil)
 	if err != nil {
-		return "Youtube Red"
+		return "Youtube Red", ""
 	}
 	ytplayer := utils.MatchOneOf(html, `;ytplayer\.config\s*=\s*({.+?});`)[1]
 	var youtube = struct {
@@ -177,7 +186,12 @@ func author(videoURL string) string {
 	json.Unmarshal([]byte(ytplayer), &youtube)
 	author := utils.GetStringFromJson(youtube.Args.PlayerResponse, "videoDetails.author")
 	if author == "" {
-		return "Youtube Red"
+		return "Youtube Red", ""
 	}
-	return author
+	videoid := utils.GetStringFromJson(youtube.Args.PlayerResponse, "videoDetails.videoId")
+	if videoid == "" {
+		return "Youtube Red", ""
+	}
+	thumb := fmt.Sprintf("https://i.ytimg.com/vi/%s/default.jpg", videoid)
+	return author, thumb
 }

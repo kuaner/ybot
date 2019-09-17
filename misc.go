@@ -17,7 +17,9 @@ func name(in string) (o1, o2 string) {
 
 func clean(input ...string) {
 	for _, i := range input {
-		os.RemoveAll(i)
+		if i != "" {
+			os.RemoveAll(i)
+		}
 	}
 }
 

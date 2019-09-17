@@ -39,6 +39,9 @@ func cvt(input, output string) error {
 }
 
 func duration(input string) int {
+	if !config.hasFfprobe {
+		return 0
+	}
 	// ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1
 	ctx, cfn := context.WithTimeout(context.Background(), time.Second*5)
 	defer cfn()

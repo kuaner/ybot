@@ -49,6 +49,9 @@ func startBot(updates tgbotapi.UpdatesChannel, bot *tgbotapi.BotAPI) {
 			//TODO: backoff retry?
 			continue
 		}
+		if !config.hasFfmpeg {
+			continue
+		}
 		t.chatID = update.Message.Chat.ID
 		t.msgID = resp.MessageID
 		select {

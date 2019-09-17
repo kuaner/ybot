@@ -13,7 +13,7 @@ import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
-var errAudio = errors.New("")
+var errAudio = errors.New("auido or chat_id fields missing")
 
 type audioMsg struct {
 	chatID    int64

@@ -70,35 +70,48 @@ Yet another telegram youtbe bot
 
 - 默认以轮询模式启动，降低使用门槛
 
-  - ./ybot -ybot-token {TOKEN HERE} > ybot.log 2>&1 &
+  - ```
+    ./ybot -ybot-token {TOKEN HERE} > ybot.log 2>&1 &
+    ```
 
-  - docker run -d --restart=always --name ybot \
-    -e YBOT_TOKEN=\${TOKEN HERE} \
-    kuaner/ybot
+  - ```
+    docker run -d --restart=always --name ybot \
+      -e YBOT_TOKEN=\${TOKEN HERE} \
+      kuaner/ybot
+    ```
 
 - 推荐使用 Webhook 模式启动，运行更稳定，开启自动 TLS
 
-  - ./ybot -ybot-token {TOKEN HERE} -ybot-hook true -ybot-acme true -ybot-domain bot.example.com -ybot-mail bot@example.com > ybot.log 2>&1 &
+  - ```
+    ./ybot -ybot-token {TOKEN HERE} -ybot-hook true -ybot-acme true -ybot-domain bot.example.com -ybot-mail bot@example.com > ybot.log 2>&1 &
 
-  - docker run -d -p 80 -p 443 --restart=always --name ybot \
-    -e YBOT_TOKEN=\${TOKEN HERE} \
-    -e YBOT_HOOK=TRUE \
-    -e YBOT_ACME=TRUE \
-    -e YBOT_DOMAIN=bot.example.com \
-    -e YBOT_MAIL=bot@example.com \
-    kuaner/ybot
+    ```
 
-- Webhook 模式启动，反向代理模式
+  - ```
+    docker run -d -p 80 -p 443 --restart=always --name ybot \
+     -e YBOT_TOKEN=\${TOKEN HERE} \
+     -e YBOT_HOOK=TRUE \
+     -e YBOT_ACME=TRUE \
+     -e YBOT_DOMAIN=bot.example.com \
+     -e YBOT_MAIL=bot@example.com \
+     kuaner/ybot
+    ```
 
-  - ./ybot -ybot-token {TOKEN HERE} -ybot-hook true -ybot-acme false -ybot-domain bot.example.com -ybot-port 8008 > ybot.log 2>&1 &
+* Webhook 模式启动，反向代理模式
 
-  - docker run -d --restart=always --name ybot \
-    -e YBOT_TOKEN=\${TOKEN HERE} \
-    -e YBOT_HOOK=TRUE \
-    -e YBOT_ACME=FALSE \
-    -e YBOT_DOMAIN=bot.example.com \
-    -e YBOT_PORT=8008 \
-    kuaner/ybot
+  - ```
+    ./ybot -ybot-token {TOKEN HERE} -ybot-hook true -ybot-acme false -ybot-domain bot.example.com -ybot-port 8008 > ybot.log 2>&1 &
+    ```
+
+  - ```
+    docker run -d --restart=always --name ybot \
+        -e YBOT_TOKEN=\${TOKEN HERE} \
+        -e YBOT_HOOK=TRUE \
+        -e YBOT_ACME=FALSE \
+        -e YBOT_DOMAIN=bot.example.com \
+        -e YBOT_PORT=8008 \
+        kuaner/ybot
+    ```
 
 ### 感谢
 

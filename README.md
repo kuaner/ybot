@@ -10,7 +10,7 @@ Yet another telegram youtube bot [在 Telegram 上使用](https://t.me/autops_bo
 
 ![feature](./picture/gcp.jpg)
 
-按照提示，填入 Token 后，会自动部署好，最后访问下 GCP 提供的 URL 地址，来触发部署的热部署。使用 GCP 部署后，每次要使用前，需要先通过 URL 触发下。
+按照提示，填入 Token 后，会自动部署好，最后访问下 GCP 提供的 URL 地址，来触发热部署。使用 GCP 部署后，每次要使用前，需要先通过 URL 触发下。
 
 ### 缘由
 
@@ -76,7 +76,7 @@ Yet another telegram youtube bot [在 Telegram 上使用](https://t.me/autops_bo
 
   - ```
     docker run -d --restart=always --name ybot \
-      -e YBOT_TOKEN=\${TOKEN HERE} \
+      -e YBOT_TOKEN=${TOKEN HERE} \
       kuaner/ybot
     ```
 
@@ -89,7 +89,7 @@ Yet another telegram youtube bot [在 Telegram 上使用](https://t.me/autops_bo
 
   - ```
     docker run -d -p 80 -p 443 --restart=always --name ybot \
-     -e YBOT_TOKEN=\${TOKEN HERE} \
+     -e YBOT_TOKEN=${TOKEN HERE} \
      -e YBOT_HOOK=TRUE \
      -e YBOT_ACME=TRUE \
      -e YBOT_DOMAIN=bot.example.com \
@@ -105,7 +105,7 @@ Yet another telegram youtube bot [在 Telegram 上使用](https://t.me/autops_bo
 
   - ```
     docker run -d --restart=always --name ybot \
-        -e YBOT_TOKEN=\${TOKEN HERE} \
+        -e YBOT_TOKEN=${TOKEN HERE} \
         -e YBOT_HOOK=TRUE \
         -e YBOT_ACME=FALSE \
         -e YBOT_DOMAIN=bot.example.com \

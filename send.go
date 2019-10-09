@@ -54,6 +54,9 @@ func sendAudio(bot *tgbotapi.BotAPI, msg audioMsg) error {
 		if err := writer.WriteField("title", msg.title); err != nil {
 			return err
 		}
+		if err := writer.WriteField("caption", msg.title); err != nil {
+			return err
+		}
 	}
 	if msg.performer != "" {
 		if err := writer.WriteField("performer", msg.performer); err != nil {

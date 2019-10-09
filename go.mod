@@ -1,6 +1,6 @@
 module github.com/kuaner/ybot
 
-go 1.13
+go 1.13.1
 
 require (
 	github.com/MercuryEngineering/CookieMonster v0.0.0-20180304172713-1584578b3403 // indirect
@@ -18,4 +18,5 @@ require (
 	golang.org/x/crypto v0.0.0-20190829043050-9756ffdc2472
 	golang.org/x/net v0.0.0-20190827160401-ba9fcec4b297
 	golang.org/x/sync v0.0.0-20190423024810-112230192c58
+	gopkg.in/cheggaaa/pb.v1 v1.0.28 // indirect
 )

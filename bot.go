@@ -104,7 +104,7 @@ func process(taskC <-chan task, bot *tgbotapi.BotAPI) {
 		// telegram的播放列表，是后收到的会在上，所以这里要倒序发msg
 		for idx := len(l) - 1; idx >= 0; idx-- {
 			f := l[idx]
-			cf := "cover_" + f
+			cf := f + "_cover.mp3"
 			if cover(f, thumb, cf) == nil {
 				f = cf
 			}

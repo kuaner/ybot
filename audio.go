@@ -61,3 +61,25 @@ func duration(input string) int {
 	}
 	return 0
 }
+
+func cover(input, cover, output string) error {
+	ctx, cfn := context.WithTimeout(context.Background(), time.Second*30)
+	defer cfn()
+	args := []string{
+		"-i",
+		input,
+		"-i",
+		cover,
+		"-map",
+		"0:0",
+		"1:0",
+		"-c",
+		"copy",
+		"-id3v2_version",
+		"3",
+		"-y",
+		output,
+	}
+	cmd := exec.CommandContext(ctx, "ffmpeg", args...)
+	return cmd.Run()
+}

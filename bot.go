@@ -104,6 +104,10 @@ func process(taskC <-chan task, bot *tgbotapi.BotAPI) {
 		// telegram的播放列表，是后收到的会在上，所以这里要倒序发msg
 		for idx := len(l) - 1; idx >= 0; idx-- {
 			f := l[idx]
+			cf := "cover_" + f
+			if cover(f, thumb, cf) == nil {
+				f = cf
+			}
 			msg := audioMsg{
 				audio:  f,
 				chatID: t.chatID,
@@ -118,9 +122,10 @@ func process(taskC <-chan task, bot *tgbotapi.BotAPI) {
 			msg.duration = duration(f)
 			log.Printf("Send %s %s", f, msg.title)
 			sendAudio(bot, msg)
+			clean(f, cf)
 		}
 		clean(m4a, thumb)
-		clean(l...)
+		// clean(l...)
 		// delete message
 		bot.DeleteMessage(tgbotapi.DeleteMessageConfig{
 			ChatID:    t.chatID,

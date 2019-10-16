@@ -40,15 +40,20 @@ func startBot(updates tgbotapi.UpdatesChannel, bot *tgbotapi.BotAPI) {
 			continue
 		}
 		log.Printf("Receive msg from %s %d %s", update.Message.From.UserName, update.Message.Chat.ID, update.Message.Text)
-		txt := fmt.Sprintf(`🔈️🔈️🔈️🔈️<a href="%s">%s</a>🔈️🔈️🔈️🔈️`, t.url, t.title)
+		txt := fmt.Sprintf(`<a href="%s">🔊</a> %s`, t.url, t.title)
 		msg := tgbotapi.NewMessage(update.Message.Chat.ID, txt)
 		msg.ParseMode = tgbotapi.ModeHTML
-		msg.ReplyToMessageID = update.Message.MessageID
+		// msg.ReplyToMessageID = update.Message.MessageID
 		resp, err := bot.Send(msg)
 		if err != nil {
 			//TODO: backoff retry?
 			continue
 		}
+		// delete message
+		bot.DeleteMessage(tgbotapi.DeleteMessageConfig{
+			ChatID:    update.Message.Chat.ID,
+			MessageID: update.Message.MessageID,
+		})
 		if !config.hasFfmpeg {
 			continue
 		}
@@ -116,6 +121,11 @@ func process(taskC <-chan task, bot *tgbotapi.BotAPI) {
 		}
 		clean(m4a, thumb)
 		clean(l...)
+		// delete message
+		bot.DeleteMessage(tgbotapi.DeleteMessageConfig{
+			ChatID:    t.chatID,
+			MessageID: t.msgID,
+		})
 	}
 }
 

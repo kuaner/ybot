@@ -72,6 +72,7 @@ func cover(input, cover, output string) error {
 		cover,
 		"-map",
 		"0:0",
+		"-map",
 		"1:0",
 		"-c",
 		"copy",

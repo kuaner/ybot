@@ -106,6 +106,7 @@ func process(taskC <-chan task, bot *tgbotapi.BotAPI) {
 			f := l[idx]
 			cf := f + "_cover.mp3"
 			if cover(f, thumb, cf) == nil {
+				clean(f)
 				f = cf
 			}
 			msg := audioMsg{
@@ -122,7 +123,7 @@ func process(taskC <-chan task, bot *tgbotapi.BotAPI) {
 			msg.duration = duration(f)
 			log.Printf("Send %s %s", f, msg.title)
 			sendAudio(bot, msg)
-			clean(f, cf)
+			clean(f)
 		}
 		clean(m4a, thumb)
 		// clean(l...)

@@ -118,6 +118,7 @@ func process(taskC <-chan task, bot *tgbotapi.BotAPI) {
 			} else {
 				msg.title = fmt.Sprintf("(%d/%d) - %s", idx+1, len(l), t.title)
 			}
+			msg.yurl = t.yURL
 			msg.performer = author
 			msg.thumb = thumb
 			msg.duration = duration(f)

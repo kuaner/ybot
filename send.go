@@ -22,6 +22,7 @@ type audioMsg struct {
 	performer string
 	thumb     string
 	duration  int
+	yurl      string
 }
 
 // 由于使用的api库不支持sendAudio的时候传thumb，这里重写了一个
@@ -54,7 +55,11 @@ func sendAudio(bot *tgbotapi.BotAPI, msg audioMsg) error {
 		if err := writer.WriteField("title", msg.title); err != nil {
 			return err
 		}
-		if err := writer.WriteField("caption", msg.title); err != nil {
+		caption := fmt.Sprintf(`<a href="%s">🈲</a> %s`, msg.yurl, msg.title)
+		if err := writer.WriteField("caption", caption); err != nil {
+			return err
+		}
+		if err := writer.WriteField("parse_mode", tgbotapi.ModeHTML); err != nil {
 			return err
 		}
 	}

@@ -69,7 +69,7 @@ func startBot(updates tgbotapi.UpdatesChannel, bot *tgbotapi.BotAPI) {
 			// do nothing
 		default:
 			// send failed msg
-			txt := msg.Text + "队列拥堵，将不会发送离线音频文件!"
+			txt := msg.Text + "，队列拥堵，将不会发送离线音频文件!"
 			editMsg := tgbotapi.NewEditMessageText(t.chatID, t.msgID, txt)
 			editMsg.ParseMode = tgbotapi.ModeHTML
 			bot.Send(editMsg)

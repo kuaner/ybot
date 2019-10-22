@@ -38,10 +38,10 @@ func startBot(updates tgbotapi.UpdatesChannel, bot *tgbotapi.BotAPI) {
 		t := extract(update.Message.Text)
 		if t.size == 0 {
 			// delete message
-			bot.DeleteMessage(tgbotapi.DeleteMessageConfig{
-				ChatID:    update.Message.Chat.ID,
-				MessageID: update.Message.MessageID,
-			})
+			// bot.DeleteMessage(tgbotapi.DeleteMessageConfig{
+			// 	ChatID:    update.Message.Chat.ID,
+			// 	MessageID: update.Message.MessageID,
+			// })
 			continue
 		}
 		log.Printf("Receive msg from %s %d %s", update.Message.From.UserName, update.Message.Chat.ID, update.Message.Text)
